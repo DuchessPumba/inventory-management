@@ -6,6 +6,11 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充発注',
+    reports: 'レポート',
+    menu: 'メニュー',
+    collapse: 'サイドバーを折りたたむ',
+    expand: 'サイドバーを展開',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -126,7 +131,48 @@ export default {
       status: 'ステータス',
       expectedDelivery: '予定配達日',
       actualDelivery: '実際の配達日'
+    },
+    submitted: {
+      title: '発注済みの注文',
+      orderNumber: '注文番号',
+      items: '品目',
+      totalCost: '合計費用',
+      submittedDate: '発注日',
+      leadTime: 'リードタイム',
+      expectedDelivery: '予定配達日',
+      status: 'ステータス',
+      empty: '発注済みの補充注文はまだありません',
+      loading: '発注済みの注文を読み込み中...'
     }
+  },
+
+  // 補充発注
+  restocking: {
+    title: '補充発注',
+    subtitle: '予算内で需要予測に基づく推奨発注を表示します',
+    budget: '予算',
+    recommendedItems: '推奨品目',
+    table: {
+      sku: 'SKU',
+      item: '品目',
+      trend: 'トレンド',
+      quantity: '数量',
+      unitCost: '単価',
+      lineCost: '明細金額',
+      leadTime: 'リードタイム'
+    },
+    summary: {
+      total: '合計費用',
+      remaining: '残り予算',
+      orderLeadTime: '注文のリードタイム'
+    },
+    days: '{count}日',
+    placeOrder: '発注する',
+    submitting: '送信中...',
+    success: '注文 {orderNumber} を送信しました。',
+    viewInOrders: '注文一覧で確認',
+    empty: 'この予算で購入できる品目はありません。予算を増やすと推奨が表示されます。',
+    error: '注文の送信に失敗しました'
   },
 
   // Finance/Spending
@@ -204,6 +250,7 @@ export default {
     shipped: '出荷済み',
     processing: '処理中',
     backordered: 'バックオーダー',
+    submitted: '発注済み',
     inStock: '在庫あり',
     lowStock: '在庫僅少',
     adequate: '適量'

@@ -513,13 +513,10 @@ export default {
   font-size: 1rem;
 }
 
-.chart-card {
-  margin-bottom: 1.75rem;
-}
-
 .chart-legend {
   display: flex;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: var(--space-6);
   font-size: 0.875rem;
 }
 
@@ -545,9 +542,15 @@ export default {
 
 .stats-grid-finance {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  /* min() lets the columns shrink below 240px in a narrow content column */
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+/* The grid already provides the gap, so drop the stat card's own bottom margin */
+.stats-grid-finance > .stat-card {
+  margin-bottom: 0;
 }
 
 .revenue-card {
@@ -694,8 +697,14 @@ export default {
 
 .two-column-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-  gap: 1.75rem;
+  /* min() prevents 450px columns from overflowing a narrower content column */
+  grid-template-columns: repeat(auto-fit, minmax(min(450px, 100%), 1fr));
+  gap: var(--space-6);
+}
+
+/* The grid already provides the gap, so drop the global card bottom margin */
+.two-column-grid > .card {
+  margin-bottom: 0;
 }
 
 .category-list {
