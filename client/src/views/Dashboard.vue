@@ -147,7 +147,7 @@
               <div v-for="cat in categoryData" :key="cat.name" class="h-bar-item">
                 <div class="h-bar-label">{{ translateCategory(cat.name) }}</div>
                 <div class="h-bar-container">
-                  <div class="h-bar" :style="{ width: (cat.value / maxCategoryValue * 100) + '%', background: cat.color }">
+                  <div class="h-bar" :class="{ 'h-bar-short': cat.value / maxCategoryValue < 0.25 }" :style="{ width: (cat.value / maxCategoryValue * 100) + '%', background: cat.color }">
                     <span class="h-bar-value">{{ selectedCurrency === 'JPY' ? formatCurrency(cat.value, selectedCurrency) : `$${(cat.value / 1000).toFixed(1)}K` }}</span>
                   </div>
                 </div>
@@ -727,20 +727,13 @@ export default {
 </script>
 
 <style scoped>
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
 .header-meta {
   font-size: 0.813rem;
   color: #64748b;
 }
 
 .kpi-section {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
 .section-title {
@@ -749,16 +742,20 @@ export default {
   color: #475569;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
+/* 170px minimum lets all 5 cards fit one row in the ~976px content area (1280px viewport,
+   expanded sidebar): 5*170 + 4*16 = 914px. Narrower areas auto-wrap; min() prevents
+   overflow in columns narrower than 170px. */
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+  gap: var(--space-4);
 }
 
 .kpi-card {
+  min-width: 0; /* allow grid item to shrink so long values cannot widen the card */
   background: white;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
@@ -778,7 +775,10 @@ export default {
 }
 
 .kpi-value {
-  font-size: 2rem;
+  /* Fluid size so "$31,166,853" fits a ~180px card at 1280px; floor/ceiling keep it
+     readable on phones (single column) and wide screens. */
+  font-size: clamp(1.25rem, 1.6vw, 2rem);
+  overflow-wrap: anywhere; /* last-resort wrap instead of clipping/overflowing */
   font-weight: 700;
   color: #0f172a;
   margin-bottom: 0.5rem;
@@ -812,9 +812,15 @@ export default {
 
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
+  /* Two columns when wide, one when the content column is narrow (min() avoids overflow) */
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+/* The grid already provides the gap, so drop the global card bottom margin */
+.charts-grid > .card {
+  margin-bottom: 0;
 }
 
 .chart-card.full-width {
@@ -860,8 +866,8 @@ export default {
 /* Order Health Dashboard Styles */
 .order-health-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: var(--space-6);
   align-items: center;
   padding: 1rem;
   min-height: 240px;
@@ -980,10 +986,13 @@ export default {
   height: 32px;
   background: #f8fafc;
   border-radius: 6px;
-  overflow: hidden;
+  /* No overflow:hidden: labels of short bars sit outside the bar and must stay visible.
+     The bar rounds its own corners instead. */
 }
 
 .h-bar {
+  position: relative; /* anchor for the outside label of short bars */
+  border-radius: 6px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -996,11 +1005,21 @@ export default {
   font-size: 0.813rem;
   font-weight: 700;
   color: white;
+  white-space: nowrap;
+}
+
+/* Bars under 25% of the max are narrower than their label, which got clipped
+   (e.g. "$30.3K" showed "0.3K"). Move the label just past the bar end, in dark text. */
+.h-bar-short .h-bar-value {
+  position: absolute;
+  left: 100%;
+  padding-left: 0.5rem;
+  color: #0f172a;
 }
 
 .line-chart {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-6);
   height: 280px;
 }
 
@@ -1114,7 +1133,7 @@ export default {
 
 /* Tasks Card Styles */
 .tasks-card {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
 }
 
 .tasks-content {

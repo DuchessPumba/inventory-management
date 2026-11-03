@@ -6,6 +6,11 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
+    reports: 'Reports',
+    menu: 'Menu',
+    collapse: 'Collapse sidebar',
+    expand: 'Expand sidebar',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -126,7 +131,48 @@ export default {
       status: 'Status',
       expectedDelivery: 'Expected Delivery',
       actualDelivery: 'Actual Delivery'
+    },
+    submitted: {
+      title: 'Submitted Orders',
+      orderNumber: 'Order Number',
+      items: 'Items',
+      totalCost: 'Total Cost',
+      submittedDate: 'Submitted',
+      leadTime: 'Lead Time',
+      expectedDelivery: 'Expected Delivery',
+      status: 'Status',
+      empty: 'No restocking orders have been submitted yet',
+      loading: 'Loading submitted orders...'
     }
+  },
+
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    subtitle: 'Recommended purchases for forecasted demand within your budget',
+    budget: 'Budget',
+    recommendedItems: 'Recommended Items',
+    table: {
+      sku: 'SKU',
+      item: 'Item',
+      trend: 'Trend',
+      quantity: 'Quantity',
+      unitCost: 'Unit Cost',
+      lineCost: 'Line Cost',
+      leadTime: 'Lead Time'
+    },
+    summary: {
+      total: 'Total Cost',
+      remaining: 'Remaining Budget',
+      orderLeadTime: 'Order Lead Time'
+    },
+    days: '{count} days',
+    placeOrder: 'Place Order',
+    submitting: 'Submitting...',
+    success: 'Order {orderNumber} was submitted.',
+    viewInOrders: 'View in Orders',
+    empty: 'No items fit within this budget. Increase the budget to see recommendations.',
+    error: 'Failed to place the order'
   },
 
   // Finance/Spending
@@ -204,6 +250,7 @@ export default {
     shipped: 'Shipped',
     processing: 'Processing',
     backordered: 'Backordered',
+    submitted: 'Submitted',
     inStock: 'In Stock',
     lowStock: 'Low Stock',
     adequate: 'Adequate'
